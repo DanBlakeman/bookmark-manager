@@ -1,29 +1,16 @@
 require 'sinatra'
 require 'data_mapper'
-
-env = ENV['RACK_ENV'] || 'development'
-
-DataMapper.setup(:default, "postgres://localhost/bookmark_manager_#{env}")
-
 require_relative '../lib/link'
 require_relative '../lib/tag'
 require_relative '../lib/user'
-require_relative 'helpers/application'
-
-DataMapper.finalize
-DataMapper.auto_upgrade!
+require_relative './helpers/application'
+require_relative 'data_mapper_setup'
 
 enable :sessions
 set :session_secret, 'super secret'
 
 get '/' do
   @links = Link.all
-  erb :index
-end
-
-get '/tags/:text' do
-  tag = Tag.first(text: params[:text])
-  @links = tag ? tag.links : []
   erb :index
 end
 
@@ -35,6 +22,12 @@ post '/links' do
   end
   Link.create(url: url, title: title, tags: tags)
   redirect to('/')
+end
+
+get '/tags/:text' do
+  tag = Tag.first(text: params[:text])
+  @links = tag ? tag.links : []
+  erb :index
 end
 
 get '/users/new' do

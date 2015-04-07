@@ -5,9 +5,10 @@ env = ENV['RACK_ENV'] || 'development'
 
 DataMapper.setup(:default, "postgres://localhost/bookmark_manager_#{env}")
 
-require_relative './lib/link'
-require_relative './lib/tag'
-require_relative './lib/user'
+require_relative '../lib/link'
+require_relative '../lib/tag'
+require_relative '../lib/user'
+require_relative 'helpers/application'
 
 DataMapper.finalize
 DataMapper.auto_upgrade!
@@ -45,11 +46,3 @@ post '/users' do
   session[:user_id] = user.id
   redirect to '/'
 end
-
-helpers do
-
-  def current_user
-    @current_user ||= User.get(session[:user_id]) if session[:user_id]
-  end
-end
-

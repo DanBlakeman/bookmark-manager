@@ -5,6 +5,7 @@ gem 'dm-postgres-adapter'
 gem 'sinatra'
 gem 'bcrypt'
 gem "bcrypt-ruby", :require => "bcrypt"
+gem 'thin'
 
 group :test do
   gem 'rspec'

@@ -6,6 +6,7 @@ gem 'sinatra'
 gem 'bcrypt'
 gem "bcrypt-ruby", :require => "bcrypt"
 gem 'thin'
+gem 'rack-flash3'
 
 group :test do
   gem 'rspec'
